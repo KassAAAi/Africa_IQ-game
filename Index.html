@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzel Generator en Codex - Mansa Musa Thema</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f3efe0;
+            color: #4b3621;
+            text-align: center;
+            margin: 20px;
+            background-image: url('achtergrond.jpg'); /* Voeg een achtergrondafbeelding toe die past bij het thema */
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        input {
+            font-size: 1.2em;
+            padding: 5px;
+            margin: 10px;
+            border: 2px solid #4b3621;
+            border-radius: 5px;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #d4af37;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c49b32;
+        }
+        #codex {
+            margin-top: 20px;
+        }
+        #codex input {
+            width: 40px;
+            text-align: center;
+        }
+        #timer {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Puzzel Generator en Codex</h1>
+    <p>Voer vier cijfers in om een woord te genereren:</p>
+    <input type="text" id="inputNumbers" maxlength="4">
+    <button onclick="generateWord()">Genereer Woord</button>
+    <p id="generatedWord"></p>
+
+    <div id="codex">
+        <p>Voer de eerste en laatste letters van de gegenereerde woorden in:</p>
+        <input type="text" id="letter1" maxlength="1">
+        <input type="text" id="letter2" maxlength="1">
+        <input type="text" id="letter3" maxlength="1">
+        <input type="text" id="letter4" maxlength="1">
+        <button onclick="checkCode()">Controleer Code</button>
+        <p id="codeResult"></p>
+    </div>
+
+    <div id="timer">
+        Tijd: <span id="time">00:00</span>
+    </div>
+
+    <script>
+        const wordMap = {
+            '1234': 'goud',
+            '5678': 'rijkdom',
+            '9101': 'karavaan',
+            // Voeg hier meer cijfer-woord combinaties toe
+        };
+
+        const correctCode = 'gkrn'; // Voorbeeld van correcte code
+
+        let startTime;
+        let timerInterval;
+
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const elapsedTime = Math.floor((now - startTime) / 1000);
+            const minutes = String(Math.floor(elapsedTime / 60)).padStart(2, '0');
+            const seconds = String(elapsedTime % 60).padStart(2, '0');
+            document.getElementById('time').textContent = `${minutes}:${seconds}`;
+        }
+
+        function generateWord() {
+            const input = document.getElementById('inputNumbers').value;
+            const word = wordMap[input];
+            const display = document.getElementById('generatedWord');
+            if (word) {
+                display.textContent = `Gegenereerd woord: ${word}`;
+                if (!startTime) {
+                    startTimer();
+                }
+            } else {
+                display.textContent = 'Geen woord gevonden voor deze cijfers.';
+            }
+        }
+
+        function checkCode() {
+            const letter1 = document.getElementById('letter1').value;
+            const letter2 = document.getElementById('letter2').value;
+            const letter3 = document.getElementById('letter3').value;
+            const letter4 = document.getElementById('letter4').value;
+            const enteredCode = letter1 + letter2 + letter3 + letter4;
+            const result = document.getElementById('codeResult');
+            if (enteredCode === correctCode) {
+                result.textContent = 'Correcte code! Puzzel opgelost.';
+                clearInterval(timerInterval);
+            } else {
+                result.textContent = 'Onjuiste code. Probeer opnieuw.';
+            }
+        }
+    </script>
+</body>
+</html>
