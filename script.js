@@ -1,19 +1,67 @@
 let startTime;
 let timerInterval;
 
-const correctCoordinates = {
-    "1234": "ik",
-    "5678": "hou",
-    "9101": "helemaal",
-    "1121": "maan",
-    "3141": "terug",
-    "5161": "tot",
-    "7181": "aan",
-    "9202": "je",
-    "1222": "de",
-    "3242": "en",
-    "5262": "terug"
-};
+<!DOCTYPE html> 
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzel Codex</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Voer de juiste codes in</h1>
+        <p>Voer de vier cijfers in om het bijbehorende woord te onthullen.</p>
+        
+        <div id="code-inputs">
+            <input type="text" maxlength="4" id="code1">
+            <input type="text" maxlength="4" id="code2">
+            <input type="text" maxlength="4" id="code3">
+            <input type="text" maxlength="4" id="code4">
+            <input type="text" maxlength="4" id="code5">
+            <input type="text" maxlength="4" id="code6">
+            <input type="text" maxlength="4" id="code7">
+            <input type="text" maxlength="4" id="code8">
+            <input type="text" maxlength="4" id="code9">
+            <input type="text" maxlength="4" id="code10">
+            <input type="text" maxlength="4" id="code11">
+        </div>
+
+        <button onclick="checkCodes()">Controleer</button>
+        <p id="output"></p>
+    </div>
+
+    <script>
+        const correctCodes = {
+            "3725": "hou",
+            "8146": "ik",
+            "5927": "helemaal",
+            "6318": "maan",
+            "2594": "terug",
+            "7361": "tot",
+            "4852": "aan",
+            "9736": "je",
+            "1684": "de",
+            "5297": "en",
+            "3861": "terug"
+        };
+
+        function checkCodes() {
+            let output = "";
+            for (let i = 1; i <= 11; i++) {
+                let userInput = document.getElementById(`code${i}`).value;
+                if (correctCodes[userInput]) {
+                    output += correctCodes[userInput] + " ";
+                } else {
+                    output += "???? ";
+                }
+            }
+            document.getElementById("output").textContent = output;
+        }
+    </script>
+</body>
+</html>;
 
 // Start de timer zodra de pagina wordt geladen
 function startTimer() {
